@@ -1,28 +1,37 @@
-# Osmedeus Expert - Claude Code Skill
+# Osmedeus Skills for AI Agents
 
-A Claude Code skill that gives any agent deep knowledge of the [Osmedeus](https://github.com/j3ssie/osmedeus) security automation engine — writing YAML workflows, running CLI commands, and configuring advanced features.
+Give any AI coding agent deep knowledge of the [Osmedeus](https://github.com/j3ssie/osmedeus) security automation engine — writing YAML workflows, running CLI commands, and configuring advanced features.
+
+Works with Claude Code, Cursor, Amp, and more.
 
 ## Installation
 
-### Option A: Personal (available in all your projects)
+First, clone the repo:
 
 ```bash
-# Clone the repo
 git clone https://github.com/osmedeus/osmedeus-skills.git
-
-# Symlink into your Claude skills directory
-mkdir -p ~/.claude/skills
-ln -s "$(pwd)/osmedeus-skills/osmedeus-expert" ~/.claude/skills/osmedeus-expert
+cd osmedeus-skills
 ```
 
-### Option B: Copy directly
+---
+
+### Claude Code
+
+#### Option A: Personal (available in all your projects)
+
+```bash
+mkdir -p ~/.claude/skills
+ln -s "$(pwd)/osmedeus-expert" ~/.claude/skills/osmedeus-expert
+```
+
+#### Option B: Copy directly
 
 ```bash
 mkdir -p ~/.claude/skills
 cp -r osmedeus-expert ~/.claude/skills/osmedeus-expert
 ```
 
-### Option C: Project-level (available only in a specific project)
+#### Option C: Project-level (available only in a specific project)
 
 ```bash
 cd /path/to/your/project
@@ -30,9 +39,47 @@ mkdir -p .claude/skills
 ln -s /path/to/osmedeus-skills/osmedeus-expert .claude/skills/osmedeus-expert
 ```
 
-### Verify installation
+#### Verify
 
 Open Claude Code and type `/osmedeus-expert` — it should appear in the skill list.
+
+---
+
+### Cursor
+
+Cursor uses [rules files](https://docs.cursor.com/context/rules) to provide custom context to the AI.
+
+#### Option A: Project-level (recommended)
+
+```bash
+cd /path/to/your/project
+mkdir -p .cursor/rules
+cp osmedeus-expert/SKILL.md .cursor/rules/osmedeus-expert.mdc
+```
+
+#### Option B: Global
+
+```bash
+mkdir -p ~/.cursor/rules
+cp osmedeus-expert/SKILL.md ~/.cursor/rules/osmedeus-expert.mdc
+```
+
+To include the full reference files, append them:
+
+```bash
+cat osmedeus-expert/references/*.md >> .cursor/rules/osmedeus-expert.mdc
+```
+---
+
+### Other Agents
+
+For any AI agent that supports custom instructions or system prompts, you can use the content from `osmedeus-expert/SKILL.md` (core knowledge) and `osmedeus-expert/references/*.md` (detailed references) directly. Copy or paste them into your agent's configuration.
+
+To combine everything into a single file:
+
+```bash
+cat osmedeus-expert/SKILL.md osmedeus-expert/references/*.md > osmedeus-combined.md
+```
 
 ## Usage
 
@@ -149,8 +196,6 @@ git pull
 ```
 
 If you used a symlink, the update is instant. If you copied, re-copy the files.
-
-## License
 
 ## License
 
