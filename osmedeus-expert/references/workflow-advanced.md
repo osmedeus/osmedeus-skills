@@ -317,3 +317,45 @@ modules:
         "deep": {goto: full-scan}
       default: {goto: standard-scan}
 ```
+
+## Condition-Based Decision Routing
+
+Instead of switch/case (exact string matching), use `conditions` for JS boolean expressions. All matching conditions execute (no short-circuit).
+
+```yaml
+steps:
+  - name: analyze-results
+    type: bash
+    command: echo "Analyzing"
+    decision:
+      conditions:
+        # Goto a specific step
+        - if: "file_length('{{Output}}/vulns.txt') > 100"
+          goto: deep-analysis
+
+        # Execute inline commands
+        - if: "{{enableNmap}} && contains('{{Port}}', '-')"
+          commands:
+            - "nmap -sV -p {{Port}} {{Target}}"
+
+        # Execute inline functions
+        - if: "file_length('{{inputFile}}') > 0"
+          function: "log_info('file has content')"
+
+        # Multiple functions
+        - if: "is_empty('{{Output}}/results.txt')"
+          functions:
+            - "log_warn('no results found')"
+            - "skip('empty results')"
+```
+
+Each condition supports:
+- `if` - JS boolean expression (evaluated via Goja)
+- `goto` - Jump to named step (or `_end` to terminate)
+- `command` / `commands` - Execute shell command(s) inline
+- `function` / `functions` - Execute JS function(s) inline
+
+**Key differences from switch/case:**
+- Switch/case does exact string matching; conditions support boolean logic
+- All matching conditions execute (not just the first match)
+- Conditions can execute commands/functions inline without needing a goto

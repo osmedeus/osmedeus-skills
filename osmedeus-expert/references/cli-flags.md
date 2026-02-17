@@ -65,6 +65,7 @@
 --repeat-wait-time DUR    Wait between repeats (default: 1m)
 --dry-run                 Show execution plan without running
 --skip-validation         Skip target type validation
+--sudo-aware              Authenticate sudo once and keep credentials alive
 ```
 
 ### Module Selection
@@ -109,4 +110,107 @@
 --run-priority PRIORITY   low, normal, high, critical
 --as-webhook              Register webhook trigger
 --webhook-auth-key KEY    Webhook authentication key
+--as-cron SCHEDULE        Create a cron schedule instead of executing (e.g., '0 2 * * *')
+```
+
+## Assets Command Flags
+
+```
+[search]                  Search term for filtering (positional argument)
+-w, --workspace NAME      Filter by workspace name
+--source SOURCE           Filter by source field (e.g., httpx, subfinder)
+--type TYPE               Filter by asset_type field (e.g., web, subdomain)
+--stats                   Show asset statistics (technologies, sources, types)
+--limit N                 Maximum records to return (default: 50)
+--offset N                Records to skip for pagination (default: 0)
+--columns COLS            Comma-separated columns to display
+--exclude-columns COLS    Comma-separated columns to exclude
+--all                     Show all columns including hidden ones (id, timestamps)
+--json                    Output in JSON format
+```
+
+## Worker Command Flags
+
+### Worker Status
+
+```
+--columns COLS            Comma-separated columns to display
+--exclude-columns COLS    Comma-separated columns to exclude
+-s, --search TERM         Filter workers by substring (case-insensitive)
+--redis-url URL           Redis connection URL override
+```
+
+### Worker Eval
+
+```
+-e, --eval SCRIPT         Script to evaluate
+-t, --target TARGET       Target value for {{target}} variable
+--params KEY=VALUE        Additional parameters (repeatable)
+--stdin                   Read script from stdin
+--redis-url URL           Redis connection URL override
+```
+
+### Worker Set
+
+```
+Usage: osmedeus worker set <worker-id-or-alias> <field> <value>
+Valid fields: alias, public-ip, ssh-enabled, ssh-keys-path
+```
+
+### Worker Queue
+
+```
+# queue list
+--redis-url URL           Redis connection URL override
+
+# queue new
+-f, --flow NAME           Flow workflow name
+-m, --module NAME         Module workflow name
+-t, --target TARGET       Target(s) to queue (repeatable)
+-T, --target-file FILE    File containing targets
+-p, --params KEY=VALUE    Additional parameters (repeatable)
+--redis-url URL           Redis connection URL override
+
+# queue run
+--concurrency N           Concurrent task executors (default: 1)
+--redis-url URL           Redis connection URL override
+```
+
+## Cloud Command Flags
+
+### Cloud Config
+
+```
+# cloud config set <key> <value>
+# cloud config list (alias: ls)
+--show-secrets            Show sensitive values (default: hidden)
+```
+
+### Cloud Create
+
+```
+-p, --provider PROVIDER   Cloud provider (aws, gcp, digitalocean, linode, azure)
+-m, --mode MODE           Execution mode (vm, serverless)
+-n, --instances N         Number of instances to create
+-f, --force               Force recreation of existing infrastructure
+```
+
+### Cloud Run
+
+```
+-p, --provider PROVIDER   Cloud provider
+-m, --mode MODE           Execution mode
+-n, --instances N         Number of instances
+```
+
+### Cloud Destroy
+
+```
+Usage: osmedeus cloud destroy [infrastructure-id]
+```
+
+## Uninstall Command Flags
+
+```
+--clean                   Also remove workspaces data (~/workspaces-osmedeus)
 ```

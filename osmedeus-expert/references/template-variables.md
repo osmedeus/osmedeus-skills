@@ -122,6 +122,41 @@ Available in `function` steps, `pre_condition`, `condition`, and `script` fields
 ### Database
 - `db_import_sarif(workspace, path)` - Import SARIF vulnerabilities
 - `convert_sarif_to_markdown(in, out)` - SARIF to markdown
+- `db_import_port_assets(workspace, file_path, source?)` - Import nmap JSONL into database (default source: "portscan")
+
+### Nmap Integration
+- `nmap_to_jsonl(input_path, output_path)` - Convert nmap XML/gnmap to JSONL
+- `run_nmap(target, flags?, output?)` - Execute nmap and auto-convert to JSONL (default flags: "-sV -T4")
+
+### Tmux Session Management
+- `tmux_run(command, session_name?)` - Create detached tmux session (auto-generates `bosm-<random8>` name)
+- `tmux_capture(session_name)` - Capture pane output (pass `"all"` for all sessions)
+- `tmux_send(session_name, command)` - Send keystrokes to session
+- `tmux_kill(session_name)` - Kill a tmux session
+- `tmux_list()` - List all tmux session names
+
+### SSH & Distributed Sync
+- `ssh_exec(host, command, user?, key_path?, password?, port?)` - Execute command via SSH (default user: "root", port: 22)
+- `ssh_rsync(host, src, dest, user?, key_path?, password?, port?)` - Copy files via rsync+SSH
+- `sync_from_master(src, dest)` - Pull files from master node (falls back to local cp)
+- `sync_from_worker(identifier, ip, src, dest)` - Pull files from a specific worker
+- `rsync_to_worker(identifier, ip, src, dest)` - Push files to a specific worker
+
+### TypeScript Execution
+- `exec_ts(code)` - Run inline TypeScript code via `bun -e`
+- `exec_ts_file(path)` - Run a TypeScript file via `bun run`
+
+### String & File Processing
+- `cut_to_file(input_file, delim, field, output_file)` - Split lines by delimiter, extract field (1-indexed) to output file
+- `cut_space(input, field)` - Split string by whitespace, return field (1-indexed)
+- `jsonl_rename_key(source, dest, mappings)` - Rename keys in JSONL file (mappings: `"old1:new1,old2:new2"`)
+- `parse_url_file(input, format, output)` - Parse URLs with format directives (`%s` scheme, `%d` domain, `%p` path, etc.)
+
+### Sudo Authentication
+- `sudo_auth(password?, keepalive?)` - Authenticate sudo; prompts via TTY if no password given; keepalive refreshes every 4min
+
+### Module Control
+- `skip(message?)` - Abort remaining steps in current module; flow continues to next module
 
 ### Step Exports
 - `{{Result}}` - Return value from `script` block in function steps

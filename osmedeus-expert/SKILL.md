@@ -78,6 +78,23 @@ osmedeus server                       # Start REST API server
 osmedeus server --master              # Start as distributed master
 osmedeus worker join                  # Join as distributed worker
 osmedeus worker join --get-public-ip  # Join with public IP detection
+osmedeus worker status                # Show registered workers
+osmedeus worker eval -e '<expr>'     # Evaluate function with distributed hooks
+osmedeus worker set <id> <field> <value>  # Update worker metadata
+osmedeus worker queue list            # List queued tasks
+osmedeus worker queue new -f <flow> -t <target>  # Queue task
+osmedeus worker queue run --concurrency 5        # Process queued tasks
+```
+
+### Cloud
+
+```bash
+osmedeus cloud config set <key> <value>   # Configure cloud provider
+osmedeus cloud config list                # List cloud config
+osmedeus cloud create --instances N       # Provision infrastructure
+osmedeus cloud list                       # List active infrastructure
+osmedeus cloud run -f <flow> -t <target> --instances N  # Run distributed
+osmedeus cloud destroy <id>               # Destroy infrastructure
 ```
 
 ### Other Commands
@@ -90,6 +107,14 @@ osmedeus snapshot import <source>     # Import workspace
 osmedeus snapshot list                # List snapshots
 osmedeus update                       # Self-update
 osmedeus update --check               # Check for updates
+osmedeus assets                       # List discovered assets
+osmedeus assets -w <workspace>        # Filter by workspace
+osmedeus assets --source httpx --type web  # Filter by source/type
+osmedeus assets --stats               # Show asset statistics
+osmedeus assets --columns url,title,status_code  # Custom columns
+osmedeus assets --json                # JSON output
+osmedeus uninstall                    # Uninstall osmedeus
+osmedeus uninstall --clean            # Also remove workspaces data
 ```
 
 For complete CLI flags, see [references/cli-flags.md](references/cli-flags.md).
@@ -234,7 +259,7 @@ For the complete inheritance system, see [references/workflow-advanced.md](refer
     on_error: continue
 ```
 
-### Pattern: Conditional Branching
+### Pattern: Conditional Branching (Switch/Case)
 
 ```yaml
 - name: check-depth
@@ -246,6 +271,23 @@ For the complete inheritance system, see [references/workflow-advanced.md](refer
       "quick": {goto: fast-scan}
       "deep": {goto: full-scan}
     default: {goto: standard-scan}
+```
+
+### Pattern: Conditional Branching (Conditions)
+
+```yaml
+- name: route-by-conditions
+  type: bash
+  command: echo "Evaluating conditions"
+  decision:
+    conditions:
+      - if: "file_length('{{inputFile}}') > 100"
+        goto: deep-analysis
+      - if: "file_length('{{inputFile}}') > 0"
+        function: "log_info('file has content')"
+      - if: "{{enableNmap}}"
+        commands:
+          - "nmap -sV {{Target}}"
 ```
 
 ### Pattern: Agent-Powered Analysis

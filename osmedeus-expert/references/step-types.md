@@ -352,6 +352,49 @@ Agentic LLM execution with tool-calling loop.
 {{agent_goal_results}}        Per-goal results (multi-goal)
 ```
 
+## Decision Fields
+
+The `decision` field supports two routing styles:
+
+### Switch/Case (Exact String Matching)
+
+```yaml
+decision:
+  switch: "{{variable}}"
+  cases:
+    "value1": {goto: step-a}
+    "value2": {goto: step-b, command: "echo 'also run this'"}
+  default: {goto: fallback}
+```
+
+Each case (`DecisionCase`) supports inline execution alongside `goto`:
+- `goto` - Jump to named step (`_end` terminates workflow)
+- `command` / `commands` - Execute shell command(s)
+- `function` / `functions` - Execute JS function(s)
+
+### Conditions (Boolean Expressions)
+
+```yaml
+decision:
+  conditions:
+    - if: "file_length('{{file}}') > 0"
+      goto: process-results
+    - if: "{{enableScan}}"
+      command: "nmap {{Target}}"
+    - if: "is_empty('{{output}}')"
+      functions:
+        - "log_warn('empty output')"
+        - "skip('nothing to process')"
+```
+
+Each condition (`DecisionCondition`) supports:
+- `if` - JS boolean expression (required)
+- `goto` - Jump to named step
+- `command` / `commands` - Execute shell command(s)
+- `function` / `functions` - Execute JS function(s)
+
+All matching conditions execute (no short-circuit). See [workflow-advanced.md](workflow-advanced.md#condition-based-decision-routing) for details.
+
 ## Action Handlers (on_success / on_error)
 
 Available on all step types:
