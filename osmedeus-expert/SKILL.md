@@ -55,7 +55,7 @@ osmedeus run -m <module> -t <target> --distributed-run
 ```bash
 osmedeus workflow list                # List available workflows
 osmedeus workflow show <name>         # Show workflow details
-osmedeus workflow validate <name>     # Validate workflow YAML
+osmedeus workflow lint <workflow-path> # Validate workflow YAML
 ```
 
 ### Installation & Setup
@@ -337,7 +337,7 @@ modules:
 
 ## Debugging Tips
 
-1. **Validate YAML** before running: `osmedeus workflow validate <name>`
+1. **Validate YAML** before running: `osmedeus workflow lint <workflow-path>`
 2. **Dry run** to see execution plan: `osmedeus run -m <module> -t test --dry-run`
 3. **Verbose output**: `osmedeus run -m <module> -t <target> -v`
 4. **Check exports**: each step's exports propagate to subsequent steps only

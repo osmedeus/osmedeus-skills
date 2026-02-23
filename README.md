@@ -1,85 +1,46 @@
 # Osmedeus Skills for AI Agents
 
+<img width="1648" height="843" alt="Image" src="https://github.com/user-attachments/assets/fefcf071-82e2-49f7-89c1-af5b31c8594b" />
+<img width="1655" height="1084" alt="Image" src="https://github.com/user-attachments/assets/3a1ef4dc-ad72-4d98-baa9-02855b8caef4" />
+
 Give any AI coding agent deep knowledge of the [Osmedeus](https://github.com/j3ssie/osmedeus) security automation engine — writing YAML workflows, running CLI commands, and configuring advanced features.
 
-Works with Claude Code, Cursor, Amp, and more.
+Works with Claude Code, OpenCode, Amp, and more.
 
-## Installation
+## Install the Skill via [skill.sh](https://skills.sh/) CLI (Recommended)
 
 First, clone the repo:
 
 ```bash
-git clone https://github.com/osmedeus/osmedeus-skills.git
-cd osmedeus-skills
+bunx skills add https://github.com/osmedeus/osmedeus-skills --skill osmedeus-expert
 ```
 
 ---
 
-### Claude Code
-
-#### Option A: Personal (available in all your projects)
+### Manual Installation
 
 ```bash
+
+git clone https://github.com/osmedeus/osmedeus-skills.git osmedeus-skills
+
+# global installation
 mkdir -p ~/.claude/skills
-ln -s "$(pwd)/osmedeus-expert" ~/.claude/skills/osmedeus-expert
-```
+cp -r osmedeus-skills/osmedeus-expert ~/.claude/skills/osmedeus-expert
 
-#### Option B: Copy directly
-
-```bash
-mkdir -p ~/.claude/skills
-cp -r osmedeus-expert ~/.claude/skills/osmedeus-expert
-```
-
-#### Option C: Project-level (available only in a specific project)
-
-```bash
+# in project directory and with different agent directory
 cd /path/to/your/project
-mkdir -p .claude/skills
-ln -s /path/to/osmedeus-skills/osmedeus-expert .claude/skills/osmedeus-expert
+mkdir -p .agents/skills
+cp -r osmedeus-skills/osmedeus-expert .agents/skills/osmedeus-expert
+
+
+# create a symlink if your agent doesn't support .agent folder
+# ln -s .agents .custom-agents
 ```
 
-#### Verify
+## Verify
 
 Open Claude Code and type `/osmedeus-expert` — it should appear in the skill list.
 
----
-
-### Cursor
-
-Cursor uses [rules files](https://docs.cursor.com/context/rules) to provide custom context to the AI.
-
-#### Option A: Project-level (recommended)
-
-```bash
-cd /path/to/your/project
-mkdir -p .cursor/rules
-cp osmedeus-expert/SKILL.md .cursor/rules/osmedeus-expert.mdc
-```
-
-#### Option B: Global
-
-```bash
-mkdir -p ~/.cursor/rules
-cp osmedeus-expert/SKILL.md ~/.cursor/rules/osmedeus-expert.mdc
-```
-
-To include the full reference files, append them:
-
-```bash
-cat osmedeus-expert/references/*.md >> .cursor/rules/osmedeus-expert.mdc
-```
----
-
-### Other Agents
-
-For any AI agent that supports custom instructions or system prompts, you can use the content from `osmedeus-expert/SKILL.md` (core knowledge) and `osmedeus-expert/references/*.md` (detailed references) directly. Copy or paste them into your agent's configuration.
-
-To combine everything into a single file:
-
-```bash
-cat osmedeus-expert/SKILL.md osmedeus-expert/references/*.md > osmedeus-combined.md
-```
 
 ## Usage
 
