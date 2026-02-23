@@ -4,6 +4,7 @@ Give any AI coding agent deep knowledge of the [Osmedeus](https://github.com/j3s
 
 Works with Claude Code, OpenCode, Amp, and more.
 
+| | |
 |---|---|
 | ![opencode-1](https://github.com/user-attachments/assets/fefcf071-82e2-49f7-89c1-af5b31c8594b) | ![opencode-2](https://github.com/user-attachments/assets/3a1ef4dc-ad72-4d98-baa9-02855b8caef4) |
 
