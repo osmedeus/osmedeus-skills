@@ -1,11 +1,12 @@
 # Osmedeus Skills for AI Agents
 
-<img width="1648" height="843" alt="Image" src="https://github.com/user-attachments/assets/fefcf071-82e2-49f7-89c1-af5b31c8594b" />
-<img width="1655" height="1084" alt="Image" src="https://github.com/user-attachments/assets/3a1ef4dc-ad72-4d98-baa9-02855b8caef4" />
-
 Give any AI coding agent deep knowledge of the [Osmedeus](https://github.com/j3ssie/osmedeus) security automation engine — writing YAML workflows, running CLI commands, and configuring advanced features.
 
 Works with Claude Code, OpenCode, Amp, and more.
+
+|---|---|
+| ![opencode-1](https://github.com/user-attachments/assets/fefcf071-82e2-49f7-89c1-af5b31c8594b) | ![opencode-2](https://github.com/user-attachments/assets/3a1ef4dc-ad72-4d98-baa9-02855b8caef4) |
+
 
 ## Install the Skill via [skill.sh](https://skills.sh/) CLI (Recommended)
 
