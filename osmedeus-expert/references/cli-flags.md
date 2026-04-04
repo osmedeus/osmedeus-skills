@@ -209,6 +209,53 @@ Valid fields: alias, public-ip, ssh-enabled, ssh-keys-path
 Usage: osmedeus cloud destroy [infrastructure-id]
 ```
 
+### Cloud Setup
+
+```
+Usage: osmedeus cloud setup <ip> [ip2] [ip3] ...
+--verbose-setup           Show full setup output
+--ansible                 Use Ansible playbook for setup
+```
+
+## Query Command Flags
+
+### Shared Flags (All Subcommands)
+
+```
+--limit N                 Maximum records to return (default: 50)
+--offset N                Records to skip for pagination (default: 0)
+--columns COLS            Comma-separated columns to display
+--exclude-columns COLS    Comma-separated columns to exclude
+--all                     Show all columns including hidden ones
+--where KEY=VALUE         Filter by column (repeatable)
+--search TERM             Search all columns (case-insensitive)
+--json                    Output in JSON format (inherited global flag)
+```
+
+### Query Vulns
+
+```
+-w, --workspace NAME      Filter by workspace
+--severity LEVEL          Filter: critical, high, medium, low, info
+--confidence LEVEL        Filter: confirmed, firm, tentative
+--asset VALUE             Filter by asset value (substring)
+```
+
+### Query Runs
+
+```
+-w, --workspace NAME      Filter by workspace
+--status STATUS           Filter: pending, running, completed, failed, cancelled
+--workflow NAME           Filter by workflow name
+--target VALUE            Filter by target (substring)
+```
+
+### Query Steps
+
+```
+-r, --run UUID            Run UUID (required)
+```
+
 ## Uninstall Command Flags
 
 ```

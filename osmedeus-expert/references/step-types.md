@@ -352,6 +352,56 @@ Agentic LLM execution with tool-calling loop.
 {{agent_goal_results}}        Per-goal results (multi-goal)
 ```
 
+## Agent-ACP
+
+Spawn an external AI coding agent as a subprocess via the Agent Communication Protocol (ACP). Unlike `agent` (internal LLM loop), `agent-acp` delegates to real agent binaries.
+
+Built-in agents: `claude-code`, `codex`, `opencode`, `gemini`
+
+```yaml
+- name: code-review
+  type: agent-acp
+
+  # Built-in agent name (or use acp_config.command for custom)
+  agent: claude-code
+
+  # Working directory for the ACP session
+  cwd: "{{Output}}"
+
+  # Restrict file access
+  allowed_paths:
+    - "{{Output}}"
+
+  # Agent configuration
+  acp_config:
+    env:
+      CUSTOM_VAR: "value"
+    write_enabled: true   # Allow file writes (default: false)
+    # Custom agent (overrides built-in):
+    # command: "my-agent"
+    # args: ["--flag"]
+
+  # Conversation messages (prompt)
+  messages:
+    - role: system
+      content: "You are a security analyst."
+    - role: user
+      content: "Analyze the scan results in {{Output}} and create a summary."
+
+  exports:
+    analysis: "{{acp_output}}"
+    errors: "{{acp_stderr}}"
+    agent_used: "{{acp_agent}}"
+```
+
+### Agent-ACP Export Variables
+
+```
+{{acp_output}}    Collected agent text output
+{{acp_stderr}}    Agent process stderr
+{{acp_agent}}     Agent name used
+```
+
 ## Decision Fields
 
 The `decision` field supports two routing styles:

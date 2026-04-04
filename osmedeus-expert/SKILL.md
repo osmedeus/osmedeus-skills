@@ -95,6 +95,8 @@ osmedeus cloud create --instances N       # Provision infrastructure
 osmedeus cloud list                       # List active infrastructure
 osmedeus cloud run -f <flow> -t <target> --instances N  # Run distributed
 osmedeus cloud destroy <id>               # Destroy infrastructure
+osmedeus cloud setup 1.2.3.4 5.6.7.8     # Setup existing machines
+osmedeus cloud setup 1.2.3.4 --ansible   # Use Ansible playbook
 ```
 
 ### Other Commands
@@ -113,6 +115,10 @@ osmedeus assets --source httpx --type web  # Filter by source/type
 osmedeus assets --stats               # Show asset statistics
 osmedeus assets --columns url,title,status_code  # Custom columns
 osmedeus assets --json                # JSON output
+osmedeus query vulns                  # Query vulnerabilities
+osmedeus query vulns --severity high -w example.com  # Filter vulns
+osmedeus query runs --status running  # Query workflow runs
+osmedeus query steps --run <run-uuid> # Query steps for a run
 osmedeus uninstall                    # Uninstall osmedeus
 osmedeus uninstall --clean            # Also remove workspaces data
 ```
@@ -175,6 +181,7 @@ modules:
 | `http` | HTTP requests | `url`, `method`, `headers`, `request_body` |
 | `llm` | LLM API calls | `messages`, `tools`, `llm_config` |
 | `agent` | Agentic LLM with tool loop | `query`, `agent_tools`, `max_iterations` |
+| `agent-acp` | Delegate to external ACP agent | `agent`, `messages`, `acp_config` |
 
 For complete field reference per step type, see [references/step-types.md](references/step-types.md).
 
